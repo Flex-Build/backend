@@ -5,7 +5,7 @@ tasks:
     init: |
       go get
     command: |
-      docker run --name="backend" --rm -d -p 5433:5432 \
+      docker run --name="backend" --rm -d -p 5432:5432 \
       -e POSTGRES_PASSWORD=backend \
       -e POSTGRES_USER=backend \
       -e POSTGRES_DB=backend \
