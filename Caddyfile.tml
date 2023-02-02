@@ -1,0 +1,3 @@
+{{ .Domain }}  {
+	file_server /static/{{ .Domain }}
+}

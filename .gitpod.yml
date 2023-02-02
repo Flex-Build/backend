@@ -1,0 +1,24 @@
+image:
+  file: .gitpod/Dockerfile
+tasks:
+  - name: live
+    init: |
+      go get
+    command: |
+      docker run --name="backend" --rm -d -p 5433:5432 \
+      -e POSTGRES_PASSWORD=backend \
+      -e POSTGRES_USER=backend \
+      -e POSTGRES_DB=backend \
+      postgres -c log_statement=all
+      sleep 12
+      gp sync-done db
+      cp sample.env .env
+      air
+  - name: postgres shell
+    command: |
+      gp sync-await db
+      docker exec -it backend psql -U backend
+
+vscode:
+  extensions:
+    - golang.go
