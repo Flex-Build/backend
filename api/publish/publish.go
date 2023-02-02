@@ -37,7 +37,8 @@ func publish(c *gin.Context) {
 		return
 	}
 	ctx := context.Background()
-	res, err := api.CreateDNSRecord(ctx, cloudflare.ResourceIdentifier(envconfig.EnvVars.ZONE_ID), cloudflare.CreateDNSRecordParams{Name: "max", Content: "propro.ommore.me", Type: "CNAME"})
+	res, err := api.CreateDNSRecord(ctx, cloudflare.ResourceIdentifier(envconfig.EnvVars.ZONE_ID),
+		cloudflare.CreateDNSRecordParams{Name: body.Name, Content: envconfig.EnvVars.SERVER_IP, Type: "A"})
 	if err != nil {
 		logo.Error("failed to create dns", err)
 		httpo.NewErrorResponse(500, "failed to deploy site").SendD(c)
@@ -46,7 +47,7 @@ func publish(c *gin.Context) {
 	domain := fmt.Sprintf("%s.ommore.me", body.Name)
 	folder_name := fmt.Sprintf("/static/%s", domain)
 	file_name := fmt.Sprintf("%s/index.html", folder_name)
-	err = os.Mkdir(folder_name, os.ModeDevice)
+	err = os.Mkdir(folder_name, os.ModePerm)
 	if err != nil {
 		logo.Error("failed to create directory", err)
 		httpo.NewErrorResponse(500, "failed to deploy site").SendD(c)

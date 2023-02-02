@@ -13,6 +13,7 @@ tasks:
       sleep 12
       gp sync-done db
       cp sample.env .env
+      sed -i '/=$/d' .env
       air
   - name: postgres shell
     command: |

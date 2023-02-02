@@ -17,7 +17,7 @@ func Test_GetServices(t *testing.T) {
 
 	apiUrl := "/api/v1.0/orgadmin/org-service"
 	reqBody := PublishRequest{
-		Name:       "max",
+		Name:       "maxprerdomf78maaarrrrx",
 		HtmlString: "<p>Hello Pro</p>",
 		Components: []string{"3"},
 	}
