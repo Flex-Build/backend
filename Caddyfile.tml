@@ -1,3 +1,4 @@
 {{ .Domain }}  {
-	file_server /static/{{ .Domain }}
+	root * /static/{{ .Domain }}/
+    file_server
 }

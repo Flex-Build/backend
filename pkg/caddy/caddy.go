@@ -15,7 +15,7 @@ type CaddyTmpl struct {
 
 func UpdateCaddy(domain string) error {
 	td := CaddyTmpl{Domain: domain}
-	t := template.Must(template.ParseFiles("../../Caddyfile.tml"))
+	t := template.Must(template.ParseFiles("./Caddyfile.tml"))
 
 	caddy_file_path := "/etc/caddy/Caddyfile"
 	caddy_file_open, err := os.OpenFile(caddy_file_path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, fs.ModeDevice)
@@ -26,10 +26,6 @@ func UpdateCaddy(domain string) error {
 	if err != nil {
 		return fmt.Errorf("failed to execute template: %w", err)
 	}
-
-	err = exec.Command("systemctl", "restart", "caddy").Err
-	if err != nil {
-		return err
-	}
+	go exec.Command("systemctl", "restart", "caddy").Output()
 	return nil
 }
